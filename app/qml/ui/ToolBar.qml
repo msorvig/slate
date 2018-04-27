@@ -8,6 +8,7 @@ import "." as Ui
 ToolBar {
     id: root
     objectName: "iconToolBar"
+    height : 40
 
     property Project project
     property int projectType: project ? project.type : 0
@@ -62,7 +63,9 @@ ToolBar {
         enabled: canvas
         anchors.fill: parent
         // Make sure that we don't end up on a sub-pixel position.
-        anchors.leftMargin: Math.round(toolSeparator.implicitWidth / 2)
+//        anchors.leftMargin: Math.round(toolSeparator.implicitWidth / 2)
+        anchors.leftMargin: Math.round(toolSeparator.implicitWidth * 3)
+        anchors.topMargin: -4
 
         ToolButton {
             id: canvasSizeButton

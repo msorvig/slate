@@ -145,3 +145,5 @@ RESOURCES += \
 !defined(USE_DEFAULT_STYLE, var) {
     RESOURCES += $$PWD/config.qrc
 }
+
+include($$PWD/macwindow.pri)

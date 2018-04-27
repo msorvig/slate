@@ -23,6 +23,7 @@
 #include <QFontDatabase>
 #include <QLoggingCategory>
 #include <QQmlFileSelector>
+#include <QQuickWindow>
 
 #include "canvaspane.h"
 #include "filevalidator.h"
@@ -50,6 +51,8 @@
 #include "tileset.h"
 #include "tilesetproject.h"
 #include "tilesetswatchimage.h"
+
+#include "macwindow.h"
 
 Q_LOGGING_CATEGORY(lcApplication, "app.application")
 
@@ -129,6 +132,12 @@ Application::Application(int &argc, char **argv, const QString &applicationName)
     mEngine->load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     qCDebug(lcApplication) << "... loaded main.qml";
     Q_ASSERT(!mEngine->rootObjects().isEmpty());
+
+    QQuickWindow *quickWindow = qobject_cast<QQuickWindow*>(mEngine->rootObjects().first());
+    Q_ASSERT(quickWindow);
+
+    MacWindow *macWindow = new MacWindow(quickWindow);
+    macWindow->show();
 }
 
 Application::~Application()

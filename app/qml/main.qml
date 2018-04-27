@@ -46,10 +46,10 @@ ApplicationWindow {
     objectName: "window"
     width: 1200
     height: 800
-    title: project && project.loaded
-        ? ((project.url.toString().length > 0 ? project.displayUrl : "Untitled") + (project.unsavedChanges ? "*" : ""))
-        : ""
-    visible: true
+//    title: project && project.loaded
+//        ? ((project.url.toString().length > 0 ? project.displayUrl : "Untitled") + (project.unsavedChanges ? "*" : ""))
+//        : ""
+//    visible: false
 
 //    onActiveFocusItemChanged: print(activeFocusItem)
 
