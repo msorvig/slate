@@ -3,6 +3,8 @@ CONFIG += c++11
 
 INCLUDEPATH += $$PWD
 
+include(qhtml5file/qhtml5file.pri)
+
 HEADERS += \
     $$PWD/application.h \
     $$PWD/applypixelerasercommand.h \

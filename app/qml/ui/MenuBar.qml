@@ -73,7 +73,7 @@ Controls.MenuBar {
         MenuItem {
             objectName: "openMenuItem"
             text: qsTr("Open")
-            onTriggered: doIfChangesDiscarded(function() { openProjectDialog.open() }, true)
+            onTriggered: doIfChangesDiscarded(function() { htmlOpen() }, true)
         }
 
         MenuSeparator {}
@@ -91,14 +91,14 @@ Controls.MenuBar {
             objectName: "saveMenuItem"
             text: qsTr("Save")
             enabled: project ? project.canSave : false
-            onClicked: projectManager.saveOrSaveAs()
+            onClicked: htmlSave()
         }
 
         MenuItem {
             objectName: "saveAsMenuItem"
             text: qsTr("Save As")
             enabled: project ? project.loaded : false
-            onClicked: saveAsDialog.open()
+            onClicked: htmlSave()
         }
 
         MenuItem {

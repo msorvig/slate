@@ -119,7 +119,30 @@ ApplicationWindow {
         saveChangesDialog.open();
     }
 
+    function htmlOpen() {
+        console.log("htmlOpen");
+        htmlFileAccess.loadFsFile("*.slt", "/tmp");
+    }
+
+    Connections {
+        target: htmlFileAccess
+        onFsFileReady: {
+            console.log("onFsFileReady " + tmpFilePath + " " + fileName)
+            loadProject("file://" + tmpFilePath)
+        }
+    }
+
+    function htmlSave() {
+        console.log("htmlSave");
+        var tmpFilePath = "/tmp/slate-tmp-file.slp"
+        project.saveAs("file://" + tmpFilePath)
+        htmlFileAccess.saveFsFile(tmpFilePath, "slatefile.slp")
+    }
+
     function saveOrSaveAs() {
+        htmlSave();
+        return;
+
         if (project.url.toString().length > 0) {
             project.save();
         } else {

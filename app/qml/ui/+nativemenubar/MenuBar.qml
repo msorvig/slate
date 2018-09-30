@@ -62,7 +62,7 @@ Item {
             Platform.MenuItem {
                 objectName: "openMenuItem"
                 text: qsTr("Open")
-                onTriggered: doIfChangesDiscarded(function() { openProjectDialog.open() }, true)
+                onTriggered: doIfChangesDiscarded(function() { htmlOpen() }, true)
             }
 
             Platform.MenuSeparator {}
@@ -80,14 +80,14 @@ Item {
                 objectName: "saveMenuItem"
                 text: qsTr("Save")
                 enabled: project && project.canSave
-                onTriggered: saveOrSaveAs()
+                onTriggered: htmlSave()
             }
 
             Platform.MenuItem {
                 objectName: "saveAsMenuItem"
                 text: qsTr("Save As")
                 enabled: project && project.loaded
-                onTriggered: saveAsDialog.open()
+                onTriggered: htmlSave()
             }
 
             Platform.MenuItem {

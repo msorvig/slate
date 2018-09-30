@@ -50,6 +50,7 @@
 #include "tileset.h"
 #include "tilesetproject.h"
 #include "tilesetswatchimage.h"
+#include <qhtml5file/qhtmlfileaccess.h>
 
 Q_LOGGING_CATEGORY(lcApplication, "app.application")
 
@@ -116,6 +117,9 @@ Application::Application(int &argc, char **argv, const QString &applicationName)
     QQmlFileSelector fileSelector(mEngine.data());
     fileSelector.setExtraSelectors(QStringList() << QLatin1String("nativemenubar"));
 #endif
+
+    QHtmlFileAccess *htmlFileAccess = new QHtmlFileAccess(qApp);
+    mEngine->rootContext()->setContextProperty("htmlFileAccess", htmlFileAccess);
 
     mProjectManager.setApplicationSettings(mSettings.data());
 
