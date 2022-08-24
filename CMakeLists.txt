@@ -6,7 +6,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
-option(ENABLE_TESTING "" ON)
+if(WASM)
+    option(ENABLE_TESTING "" OFF)
+else()
+    option(ENABLE_TESTING "" ON)
+endif()
 
 find_package(Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS Gui)
