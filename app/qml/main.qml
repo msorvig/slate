@@ -54,6 +54,7 @@ ApplicationWindow {
     property alias saveAsDialog: saveAsDialog
     property alias moveContentsDialog: moveContentsDialog
     property int oldWindowVisibility: Window.Windowed
+    readonly property bool isWebPlatform: Qt.platform.os == "wasm"
 
     onClosing: (closeEvent) => {
         closeEvent.accepted = false
@@ -84,6 +85,11 @@ ApplicationWindow {
     }
 
     function toggleFullScreen() {
+        if (isWebPlatform) {
+            WebUtils.toggleFullscreen()
+            return;
+        }
+
         if (window.visibility === Window.FullScreen) {
             window.visibility = oldWindowVisibility
         }
