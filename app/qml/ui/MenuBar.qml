@@ -67,6 +67,8 @@ Controls.MenuBar {
         }
 
         MenuSeparator {}
+/*
+        FIXME: hide sub-menu without commenting out
 
         Menu {
             id: recentFilesSubMenu
@@ -117,7 +119,7 @@ Controls.MenuBar {
                 onTriggered: settings.clearRecentFiles()
             }
         }
-
+*/
         MenuItem {
             objectName: "openMenuItem"
             text: qsTr("Open")
