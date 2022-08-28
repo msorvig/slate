@@ -112,7 +112,7 @@ void qtwebutils::enableTabCloseConfirmation(bool enable)
 }
 
 namespace {
-     emscripten::val beforeUnloadhandler(emscripten::val event) {
+     void beforeUnloadhandler(emscripten::val event) {
          // Adding this event handler is sufficent to make the browsers display
          // the confirmation dialog, provided the calls below are also made:
          event.call<void>("preventDefault"); // call preventDefault as required by standard

@@ -112,6 +112,13 @@ ApplicationWindow {
     }
 
     Connections {
+        target: projectManager.project ? projectManager.project : null
+        function onUnsavedChangesChanged (ok) {
+            WebUtils.enableTabCloseConfirmation(projectManager.project.unsavedChanges)
+        }
+    }
+
+    Connections {
         target: canvas
         function onErrorOccurred(errorMessage) { errorPopup.showError(errorMessage) }
         function onNoteCreationRequested() {
