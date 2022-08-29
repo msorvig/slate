@@ -24,6 +24,13 @@ import Qt.labs.platform as Platform
 
 Menu {
     objectName: "swatchSettingsContextMenu"
+    readonly property bool isWebPlatform: Qt.platform.os == "wasm"
+
+    function webImportSwatch() {
+        WebUtils.loadFileToFileSystem("*.slp", "/tmp/tmploadfile.slp",
+            function(tmpFilePath, _fileName) { loadProject("file://" + tmpFilePath) }
+        );
+    }
 
     MenuItem {
         id: importSlateSwatchMenuItem
@@ -47,13 +54,29 @@ Menu {
 
     MenuItem {
         text: qsTr("Export Swatch...")
-        onTriggered: exportDialog.open()
+        onTriggered: {
+            if (isWebPlatform) {
+                var tmpFilePath = "/tmp/slate-tmp-file"
+                project.exportSwatch("file://" + tmpFilePath)
+                WebUtils.saveFileFromFileSystem(tmpFilePath, "swatch.json")
+            } else {
+                exportDialog.open()
+            }
+        }
     }
 
     function importMenuItemClicked(menuItem) {
-        importDialog.swatchFormat = menuItem.swatchFormat
-        importDialog.nameFilters = menuItem.nameFilters
-        importDialog.open()
+        if (isWebPlatform) {
+            WebUtils.loadFileToFileSystem(menuItem.nameFilters, "/tmp/tmploadfile",
+                function(tmpFilePath, _fileName) { 
+                    importSwatch(menuItem.swatchFormat, "file://" + tmpFilePath) 
+                }
+            );
+        } else {
+            importDialog.swatchFormat = menuItem.swatchFormat
+            importDialog.nameFilters = menuItem.nameFilters
+            importDialog.open()
+        }
     }
 
     Platform.FileDialog {
