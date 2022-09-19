@@ -46,6 +46,24 @@ Controls.MenuBar {
     property AddGuidesDialog addGuidesDialog
     property RearrangeContentsIntoGridDialog rearrangeContentsIntoGridDialog
 
+    function webOpenProject() {
+        WebUtils.loadFileToFileSystem("*.slp", "/tmp/tmploadfile.slp",
+            function(tmpFilePath, _fileName) { loadProject("file://" + tmpFilePath) }
+        );
+    }
+
+    function webSaveProject() {
+        var tmpFilePath = "/tmp/slate-tmp-file.slp"
+        project.saveAs("file://" + tmpFilePath)
+        WebUtils.saveFileFromFileSystem(tmpFilePath, "slatefile.slp")
+    }
+
+    function webExportProject() {
+        var tmpFilePath = "/tmp/slate-tmp-file.png"
+        project.exportImage("file://" + tmpFilePath)
+        WebUtils.saveFileFromFileSystem(tmpFilePath, "slateexport.png")
+    }
+
     Menu {
         id: fileMenu
         title: qsTr("File")
@@ -123,7 +141,13 @@ Controls.MenuBar {
         MenuItem {
             objectName: "openMenuItem"
             text: qsTr("Open")
-            onTriggered: saveChangesDialog.doIfChangesSavedOrDiscarded(function() { openProjectDialog.open() }, true)
+            onTriggered: {
+                if (isWebPlatform) {
+                    webOpenProject();
+                } else {
+                    saveChangesDialog.doIfChangesSavedOrDiscarded(function() { openProjectDialog.open() }, true)
+                }
+            }
         }
 
         MenuSeparator {
@@ -147,7 +171,14 @@ Controls.MenuBar {
             objectName: "saveMenuItem"
             text: qsTr("Save")
             enabled: project && project.canSave
-            onTriggered: projectManager.saveOrSaveAs()
+            onTriggered: {
+                if (isWebPlatform) {
+                    console.log("Web Save");
+                    webSaveProject();
+                } else {
+                    projectManager.saveOrSaveAs()
+                }
+            }
         }
 
         MenuItem {
@@ -165,7 +196,14 @@ Controls.MenuBar {
             objectName: "exportMenuItem"
             text: qsTr("Export")
             enabled: project && project.loaded && projectType === Project.LayeredImageType
-            onTriggered: exportDialog.open()
+            onTriggered: {
+                if (isWebPlatform) {
+                    console.log("Web Export");
+                    webExportProject();
+                } else {
+                    exportDialog.open()
+                }
+            }
         }
 
         MenuItem {
