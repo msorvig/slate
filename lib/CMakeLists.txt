@@ -217,6 +217,10 @@ qt_add_qml_module(slate
         tilesetswatchimage.h
         undocommand.h
         undocommand.cpp
+        webutils.h
+        webutils.cpp
+        qtwebutils.h
+        qtwebutils.cpp
 )
 
 find_package(Qt6 COMPONENTS Core)
@@ -230,6 +234,7 @@ target_link_libraries(slate
         projectWarning
         Qt::Core
         Qt::Gui
+        Qt::GuiPrivate
         Qt::Qml
         Qt::Quick
         Qt::Widgets
