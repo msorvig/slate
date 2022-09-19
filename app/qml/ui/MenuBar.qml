@@ -32,6 +32,7 @@ Controls.MenuBar {
     property Project project: projectManager.project
     property int projectType: project ? project.type : 0
     readonly property bool isImageProjectType: projectType === Project.ImageType || projectType === Project.LayeredImageType
+    readonly property bool isWebPlatform: Qt.platform.os == "wasm"
 
     property PasteAcrossLayersDialog pasteAcrossLayersDialog
     property var hueSaturationDialog
@@ -74,6 +75,8 @@ Controls.MenuBar {
             // This can use LayoutGroup if it's ever implemented: https://bugreports.qt.io/browse/QTBUG-44078
             width: 400
             enabled: recentFilesInstantiator.count > 0
+            visible: !isWebPlatform // FIXME: no effect
+            height: visible ? implicitHeight : 0
 
             onClosed: canvas.forceActiveFocus()
 
@@ -121,13 +124,18 @@ Controls.MenuBar {
             onTriggered: saveChangesDialog.doIfChangesSavedOrDiscarded(function() { openProjectDialog.open() }, true)
         }
 
-        MenuSeparator {}
+        MenuSeparator {
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
+        }
 
         MenuItem {
             objectName: "showLocationMenuItem"
             //: Opens the project directory in the file explorer.
             text: qsTr("Show Location")
             enabled: project && project.loaded
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
             onTriggered: Qt.openUrlExternally(project.dirUrl)
         }
 
@@ -144,6 +152,8 @@ Controls.MenuBar {
             objectName: "saveAsMenuItem"
             text: qsTr("Save As")
             enabled: project && project.loaded
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
             onTriggered: saveAsDialog.open()
         }
 
@@ -163,6 +173,8 @@ Controls.MenuBar {
             checkable: true
             checked: enabled && project.autoExportEnabled
             enabled: exportMenuItem.enabled
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
             onTriggered: project.autoExportEnabled = !project.autoExportEnabled
         }
 
@@ -185,9 +197,14 @@ Controls.MenuBar {
             onTriggered: project.revert()
         }
 
-        MenuSeparator {}
+        MenuSeparator {
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
+        }
 
         MenuItem {
+            visible: !isWebPlatform
+            height: visible ? implicitHeight : 0
             objectName: "quitMenuItem"
             text: qsTr("Quit Slate")
             onTriggered: saveChangesDialog.doIfChangesSavedOrDiscarded(function() { Qt.quit() })
