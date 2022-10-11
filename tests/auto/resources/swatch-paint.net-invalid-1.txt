@@ -1,3 +1,0 @@
-; paint.net Palette File
-; Lines that start with a semicolon are comments
-ZZFFFFFF
