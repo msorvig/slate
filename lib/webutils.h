@@ -9,6 +9,7 @@ class SLATE_EXPORT WebUtils: public QtWebUtils
 {
     Q_OBJECT
     QML_ELEMENT
+    QML_SINGLETON
 public:
     explicit WebUtils(QObject *parent = nullptr);           
 };
