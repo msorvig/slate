@@ -30,7 +30,7 @@ bool qtwebutils::loadFileToFileSystem(const QString &accept, const QString &dest
     auto fileData = new LoadFileData();
 
     QWasmLocalFileAccess::openFile(accept.toStdString(),
-        [](int fileCount) { Q_ASSERT(fileCount == 1); },
+        [](int fileCount) {;},
         [fileData](uint64_t size, const std::string name) -> char * {
             fileData->name = QString::fromStdString(name);
             fileData->buffer.resize(size);
