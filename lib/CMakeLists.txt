@@ -217,15 +217,11 @@ qt_add_qml_module(slate
         tilesetswatchimage.h
         undocommand.h
         undocommand.cpp
-)
-
-if(EMSCRIPTEN)
-    target_sources(slate PUBLIC   
         webutils.h
         webutils.cpp
         qtwebutils.h
-        qtwebutils.cpp)
-endif()
+        qtwebutils.cpp
+)
 
 find_package(Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS Gui)
