@@ -60,7 +60,7 @@ void qtwebutils::saveFileFromFileSystem(const QString &sourceFilePath, const QSt
     QFile sourceFile(sourceFilePath);
     sourceFile.open(QIODevice::ReadOnly);
     QByteArray content = sourceFile.readAll();
-    QWasmLocalFileAccess::saveFile(content.constData(), size_t(content.size()), fileNameHint.toStdString());
+    QWasmLocalFileAccess::saveFile(content, fileNameHint.toStdString());
 }
 
 /*!
