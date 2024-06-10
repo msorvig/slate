@@ -6,6 +6,8 @@
 #include <emscripten/val.h>
 #include <emscripten/bind.h>
 
+#ifdef Q_OS_WASM
+
 /*!
     Displays a native file dialog where the user can select a file from
     the local file system.
@@ -153,5 +155,7 @@ void QtWebUtils::enableTabCloseConfirmation(bool enable)
 {
     qtwebutils::enableTabCloseConfirmation(enable);
 }
+
+#endif // #ifdef Q_OS_WASM
 
 

@@ -5,6 +5,8 @@
 #include <QtCore/QString>
 #include <QtQml/QQmlEngine>
 
+#ifdef Q_OS_WASM
+
 namespace qtwebutils {
     
     bool loadFileToFileSystem(const QString &accept, const QString &destinationFilePath,
@@ -30,5 +32,7 @@ public:
     Q_INVOKABLE void toggleFullscreen();
     Q_INVOKABLE void enableTabCloseConfirmation(bool enable);
 };
+
+#endif // #ifdef Q_OS_WASM
 
 #endif // QTWEBUTILS_H
