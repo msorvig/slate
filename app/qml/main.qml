@@ -233,7 +233,7 @@ ApplicationWindow {
 
             SplitView.minimumWidth: 200
             SplitView.preferredWidth: defaultPreferredWidth
-            SplitView.maximumWidth: window.width / 3
+            SplitView.maximumWidth: Math.max(window.width / 3, SplitView.minimumWidth)
 
             Ui.ColourPanel {
                 id: colourPanel
