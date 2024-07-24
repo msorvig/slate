@@ -260,6 +260,8 @@ set_target_properties(slate PROPERTIES
 )
 
 # Generate vcs-repo-state.h
+SET(BUILD_VERSION 0.0.0)
+
 if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
     find_package(Git)
     if(GIT_FOUND)
@@ -269,15 +271,14 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
             OUTPUT_VARIABLE BUILD_VERSION
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
-
-        configure_file(
-            ${CMAKE_CURRENT_SOURCE_DIR}/vcs-repo-state.h.in
-            ${CMAKE_CURRENT_BINARY_DIR}/vcs-repo-state.h
-            )
     else()
-        message(FATAL_ERROR "Can not find Git")
+        message("Can not find Git")
     endif()
 else()
-    message(FATAL_ERROR "Can not find .git repo")
+    message("Can not find .git repo")
 endif()
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/vcs-repo-state.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/vcs-repo-state.h
+    )
