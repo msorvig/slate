@@ -2889,11 +2889,6 @@ void ImageCanvas::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    // We set this here rather than in applyZoom() because the user should
-    // probably be able to use the menu items to zoom in without the
-    // centered scene setting being disrupted.
-    mCurrentPane->setSceneCentered(false);
-
     const QPoint pixelDelta = event->pixelDelta();
     const QPoint angleDelta = event->angleDelta();
 
@@ -2908,12 +2903,21 @@ void ImageCanvas::wheelEvent(QWheelEvent *event)
             newZoomLevel = mCurrentPane->zoomLevel() + (angleDelta.y() > 0 ? zoomAmount : -zoomAmount);
         }
 
-        if (!qFuzzyIsNull(newZoomLevel))
+        if (!qFuzzyIsNull(newZoomLevel)) {
             applyZoom(newZoomLevel, event->position().toPoint());
+            if (mCurrentPane->isSceneCentered())
+                centrePanes();
+        }
     } else {
         // Wheel events pan.
+
         if (pixelDelta.isNull())
             return;
+
+        // We set this here rather than in applyZoom() because the user should
+        // probably be able to use the menu items to zoom in without the
+        // centered scene setting being disrupted.
+        mCurrentPane->setSceneCentered(false);
 
         const QPointF panDistance(pixelDelta.x() * 0.1, pixelDelta.y() * 0.1);
         mCurrentPane->setOffset(mCurrentPane->offset() + panDistance);
